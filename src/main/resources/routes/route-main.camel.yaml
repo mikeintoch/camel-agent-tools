@@ -1,0 +1,21 @@
+- route:
+    id: route-4170
+    from:
+      id: from-1840
+      uri: platform-http
+      parameters:
+        path: /camel/chat
+      steps:
+        - process:
+            id: process-2123
+            description: AI Message
+            ref: createChatMessage
+        - to:
+            id: to-6ca0
+            uri: langchain4j-tools
+            parameters:
+              tags: store
+              toolId: my-tools
+        - log:
+            id: log-3501
+            message: ${body}

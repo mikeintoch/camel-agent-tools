@@ -1,0 +1,39 @@
+- route:
+    id: route-4072
+    description: Get products
+    from:
+      uri: langchain4j-tools
+      parameters:
+        description: get products by category and color
+        parameter.category: string
+        parameter.color: string
+        tags: store
+        toolId: productsbycategoryandcolor
+      steps:
+        - convertHeaderTo:
+            id: convertHeaderTo-1639
+            name: category
+            type: String
+        - convertHeaderTo:
+            id: convertHeaderTo-4750
+            name: color
+            type: String
+        - to:
+            id: to-8710
+            uri: sql
+            parameters:
+              query: "Select  name, description, category, size, color, price, stock from
+                products where Lower(category)= Lower (:#category) and
+                Lower(color) = Lower(:#color) "
+              useIterator: false
+        - marshal:
+            id: marshal-2467
+            json: {}
+        - setBody:
+            id: setBody-1807
+            expression:
+              simple:
+                expression: '{"result:": ${body}}'
+        - log:
+            id: log-2431
+            message: ${body}
