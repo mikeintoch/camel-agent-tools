@@ -2,6 +2,7 @@
     id: route-4072
     description: Get products
     from:
+      id: from-a024
       uri: langchain4j-tools
       parameters:
         description: Query database products by category and color
@@ -22,13 +23,15 @@
             id: to-8710
             uri: sql
             parameters:
-              query: "Select  name, description, category, size, color, price, stock from
-                products where Lower(color)= Lower (:#color) and Lower(category)
-                = Lower(:#category) "
+              query: >-
+                Select  name, description, category, size, color, price, stock
+                from products where Lower(color)= Lower (:#color) and
+                Lower(category) = Lower(:#category) 
               useIterator: false
         - marshal:
             id: marshal-2467
-            json: {}
+            json:
+              id: json-e3cc
         - log:
             id: log-2431
             message: ${body}
